@@ -463,10 +463,9 @@ class PaddleTTSConnectionHandler:
             # wav type: <class 'numpy.ndarray'>  float32, convert to pcm (base64)
             wav = float2pcm(wav)  # float32 to int16
             wav_bytes = wav.tobytes()  # to bytes
-            wav_base64 = base64.b64encode(wav_bytes).decode('utf8')  # to base64
             wav_list.append(wav)
 
-            yield wav_base64 + '\r\n'
+            yield wav_bytes
 
         wav_all = np.concatenate(wav_list, axis=0)
         duration = len(wav_all) / self.tts_engine.sample_rate
